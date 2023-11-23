@@ -1,0 +1,65 @@
+/* Table.css */
+
+.table-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+tr {
+    color: black;
+}
+
+.map-data {
+    color: wheat;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+button {
+    margin-right: 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.edit-modal {
+    text-align: center;
+}
+
+.edit-modal label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.edit-modal input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+}
+
+.edit-modal button {
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.edit-modal button.cancel {
+    background-color: #d9534f;
+}
