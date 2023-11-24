@@ -1,7 +1,5 @@
 # Show Data in Table
 
-Brief project description or introduction.
-
 ## Table of Contents
 
 1. [Folder Structure](#folder-structure)
@@ -11,6 +9,11 @@ Brief project description or introduction.
 ## Folder Structure
 
 - `/src`: Contains the source code for the React application.
+-    `/component` :
+-         `/Table.jsx`
+-         `/table.css`
+- `/App.js`
+- `/main.js`
 - `/public`: Public assets and HTML file.
 - `/node_modules`: Node.js dependencies (automatically generated).
 - `/build`: Compiled and minified code (automatically generated).
