@@ -9,9 +9,10 @@
 ## Folder Structure
 
 - `/src`: Contains the source code for the React application.
--    `/component` :
--         `/Table.jsx`
--         `/table.css`
+-  `   /component`
+-  `     /Table`
+-  `       /Table.jsx`
+-  `       /table.css`
 - `/App.js`
 - `/main.js`
 - `/public`: Public assets and HTML file.
