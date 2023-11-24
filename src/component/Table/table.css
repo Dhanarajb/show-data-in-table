@@ -14,10 +14,12 @@ table {
 
 tr {
     color: black;
+    background: cornflowerblue;
 }
 
 .map-data {
-    color: wheat;
+    color: white;
+    background: black;
 }
 
 th,

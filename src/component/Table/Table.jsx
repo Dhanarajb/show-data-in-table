@@ -1,12 +1,16 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Modal from "react-modal";
-import './table.css'
+import './table.css';
 
 const Table = () => {
   const [data, setData] = useState([]);
   const [editData, setEditData] = useState(null);
+  const [deleteData, setDeleteData] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchData();
@@ -17,9 +21,12 @@ const Table = () => {
       const response = await axios.get(
         "https://assets.alippo.com/catalog/static/data.json"
       );
-      setData(response.data);
+      setData(response.data || []);
+      setLoading(false);
     } catch (error) {
+      setError("Error fetching data. Please try again later.");
       console.error("Error fetching data:", error);
+      setLoading(false);
     }
   };
 
@@ -29,13 +36,10 @@ const Table = () => {
   };
 
   const handleEditSubmit = () => {
-    const dataIndex = data.findIndex((item) => item === editData);
-
+    const dataIndex = data.findIndex((item) => item.id === editData.id);
     const updatedData = [...data];
     updatedData[dataIndex] = { ...editData };
     setData(updatedData);
-
-
     setShowEditModal(false);
   };
 
@@ -43,11 +47,29 @@ const Table = () => {
     setShowEditModal(false);
   };
 
-  const handleDelete = (index) => {
-    const updatedData = [...data];
-    updatedData.splice(index, 1);
-    setData(updatedData);
+  const handleDelete = (rowData) => {
+    setDeleteData(rowData);
+    setShowDeleteModal(true);
   };
+
+  const handleDeleteConfirm = () => {
+    const dataIndex = data.findIndex((item) => item.id === deleteData.id);
+    const updatedData = [...data];
+    updatedData.splice(dataIndex, 1);
+    setData(updatedData);
+    setShowDeleteModal(false);
+  };
+
+  const handleCancelDelete = () => {
+    setShowDeleteModal(false);
+  };
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
+  }
 
   return (
     <div className="table-container">
@@ -73,12 +95,13 @@ const Table = () => {
               <td>{row.pinCode || "-"}</td>
               <td>
                 <button onClick={() => handleEdit(row)}>Edit</button>
-                <button onClick={() => handleDelete(index)}>Delete</button>
+                <button onClick={() => handleDelete(row)}>Delete</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+
 
       <Modal
         isOpen={showEditModal}
@@ -96,7 +119,6 @@ const Table = () => {
       >
         <div className="edit-modal">
           <h2>Edit Entry</h2>
-          {/* Assuming 'editData' has the current row's data */}
           <label>Name: </label>
           <input
             type="text"
@@ -131,6 +153,28 @@ const Table = () => {
           />
           <button onClick={handleEditSubmit}>Submit</button>
           <button onClick={handleCancelEdit}>Cancel</button>
+        </div>
+      </Modal>
+
+      <Modal
+        isOpen={showDeleteModal}
+        onRequestClose={handleCancelDelete}
+        style={{
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+          },
+          content: {
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+          },
+        }}
+      >
+        <div className="delete-modal">
+          <h2>Delete Entry</h2>
+          <p>Are you sure you want to delete this entry?</p>
+          <button onClick={handleDeleteConfirm}>Delete</button>
+          <button onClick={handleCancelDelete}>Cancel</button>
         </div>
       </Modal>
     </div>
